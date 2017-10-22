@@ -3,7 +3,6 @@ function parser(tokens) {
   let current = 0;
 
   function walk() {
-
     var token = tokens[current];
     if (token.type === 'number') {
       current++;
@@ -24,9 +23,7 @@ function parser(tokens) {
     }
 
     if (token.type === 'paren' && token.value === '(') {
-
       token = tokens[++current];
-
       var node = {
         type: 'CallExpression',
         name: token.value,
@@ -51,15 +48,15 @@ function parser(tokens) {
     throw new TypeError(token.type);
   }
 
-  var ast = {
+  var abstractSyntaxTree = {
 
     type: 'Program',
     body: [],
   };
 
   while (current < tokens.length) {
-    ast.body.push(walk());
+    abstractSyntaxTree.body.push(walk());
   }
 
-  return ast;
+  return abstractSyntaxTree;
 }
