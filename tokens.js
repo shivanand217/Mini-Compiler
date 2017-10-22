@@ -1,15 +1,12 @@
 
 function tokenizer(input) {
-
+  
   var current = 0;
   var tokens = [];
 
   while (current < input.length) {
-
     var char = input[current];
-
     if (char === '(') {
-
       tokens.push({
         type: 'paren',
         value: '('
@@ -65,10 +62,8 @@ function tokenizer(input) {
         type: 'name',
         value: value
       });
-
       continue;
     }
-
     throw new TypeError('I dont know what this character is: ' + char);
   }
 
@@ -76,7 +71,5 @@ function tokenizer(input) {
 }
 
 var input = '(add 2 (subtract 4 2))';
-
 var tokens = tokenizer(input);
-
 console.log(tokens);
