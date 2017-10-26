@@ -1,12 +1,14 @@
+// ast : abstactSyntaxTree
+
 function parser(tokens) {
 
   let current = 0;
-
   function walk() {
-    var token = tokens[current];
-    if (token.type === 'number') {
-      current++;
+    let token = tokens[current];
 
+    if (token.type === 'number') {
+
+      current++;
       return {
         type: 'NumberLiteral',
         value: token.value,
@@ -22,8 +24,13 @@ function parser(tokens) {
       };
     }
 
-    if (token.type === 'paren' && token.value === '(') {
+ if (
+      token.type === 'paren' &&
+      token.value === '('
+    ) {
+
       token = tokens[++current];
+
       var node = {
         type: 'CallExpression',
         name: token.value,
@@ -31,12 +38,11 @@ function parser(tokens) {
       };
 
       token = tokens[++current];
-      
-       while (
+
+      while (
         (token.type !== 'paren') ||
         (token.type === 'paren' && token.value !== ')')
       ) {
-     
         node.params.push(walk());
         token = tokens[current];
       }
@@ -48,15 +54,57 @@ function parser(tokens) {
     throw new TypeError(token.type);
   }
 
-  var abstractSyntaxTree = {
-
+  let ast = {
     type: 'Program',
     body: [],
   };
 
   while (current < tokens.length) {
-    abstractSyntaxTree.body.push(walk());
+    ast.body.push(walk());
   }
 
-  return abstractSyntaxTree;
+  return ast;
+}
+
+
+function traverser(ast, visitor) {
+
+  function traverseArray(array, parent) {
+    array.forEach(child => {
+      traverseNode(child, parent);
+    });
+  }
+
+  function traverseNode(node, parent) {
+
+    let methods = visitor[node.type];
+
+    if (methods && methods.enter) {
+      methods.enter(node, parent);
+    }
+
+    switch (node.type) {
+
+      case 'Program':
+        traverseArray(node.body, node);
+        break;
+
+      case 'CallExpression':
+        traverseArray(node.params, node);
+        break;
+
+      case 'NumberLiteral':
+      case 'StringLiteral':
+        break;
+
+      default:
+        throw new TypeError(node.type);
+    }
+
+    if (methods && methods.exit) {
+      methods.exit(node, parent);
+    }
+  }
+
+  traverseNode(ast, null);
 }
