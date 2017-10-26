@@ -1,6 +1,6 @@
 # mini-Compiler
 
-# Implemented a very Mini Compiler in Js from Scratch.
+# Implemented a Very Small Compiler in Js from Scratch.
 
 ********Supports All the basic features of what a Compiler should must Have:- ***********
 
@@ -10,5 +10,4 @@
 2. Transformation takes this abstract representation (Abstract Syntax Tree) and manipulates to do
    whatever the compiler wants it to.
     
-3. Code Generation takes the transformed representation of the code and
-   turns it into new code.
+3. Code Generation takes the transformed representation of the code and turns it into new code.
