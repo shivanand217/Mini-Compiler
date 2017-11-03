@@ -1,8 +1,8 @@
-# mini-Compiler
+   # Mini-Compiler
 
-# Implemented a Very Small Compiler in Js from Scratch.
+   # Implementation of a Very Small Compiler in Js from Scratch.
 
-********  Supports All the basic features of what a Compiler should Have:- ***********
+   ***************       Supports All the basic features of what a Compiler should must Have:-      ******************
 
 1. Parsing - It is the process of taking raw code and turning it into a more abstract
    representation of the code.
